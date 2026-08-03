@@ -1,0 +1,95 @@
+=== RUN   TestE1v2_ThreeModelComparison
+    e1_models_test.go:299: E1v2 — Model A (map) / Model B (plain struct) / Model B′ (guarded struct) / Model C (registers)
+    e1_models_test.go:300: All four run under EQUAL synchronization (mutex). Differences: raw mutation surface
+    e1_models_test.go:301: and write-time policy. Metrics are architectural, not performance.
+    e1_models_test.go:302: 
+=== RUN   TestE1v2_ThreeModelComparison/A_—_GenericContext_(map[string]any)
+    e1_models_test.go:306: model: A — GenericContext (map[string]any)
+    e1_models_test.go:307:   raw surface: true | automatic timestamp: false
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         VIOLATED: sample 1: Timestamp did not advance after a write (0 → 0)
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1 concurrent 8×2000 RMW (next_act/stderr): false
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         VIOLATED: sample 1: Timestamp did not advance after a write (0 → 0)
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1b governance ride (health/watchdog): false
+    e1_models_test.go:317:   M3 rollback: save → mutate → restore → exact: true
+    e1_models_test.go:324:   M2 invalid mutations: attempted=3 stuck=3 rejected=0
+=== RUN   TestE1v2_ThreeModelComparison/B_—_TypedState_(plain_struct,_exported_fields)
+    e1_models_test.go:306: model: B — TypedState (plain struct, exported fields)
+    e1_models_test.go:307:   raw surface: true | automatic timestamp: false
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         VIOLATED: sample 1: Timestamp did not advance after a write (0 → 0)
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1 concurrent 8×2000 RMW (next_act/stderr): false
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         VIOLATED: sample 1: Timestamp did not advance after a write (0 → 0)
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1b governance ride (health/watchdog): false
+    e1_models_test.go:317:   M3 rollback: save → mutate → restore → exact: true
+    e1_models_test.go:324:   M2 invalid mutations: attempted=3 stuck=2 rejected=0
+    e1_models_test.go:326:     note: 1 corruption(s) invisible to the invariant suite — models without an
+    e1_models_test.go:327:     automatic timestamp let I4 under-detect invalid watchdog values.
+=== RUN   TestE1v2_ThreeModelComparison/B′_—_GuardedState_(closed_struct,_unexported_fields)
+    e1_models_test.go:306: model: B′ — GuardedState (closed struct, unexported fields)
+    e1_models_test.go:307:   raw surface: false | automatic timestamp: true
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         OK
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1 concurrent 8×2000 RMW (next_act/stderr): true
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         OK
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1b governance ride (health/watchdog): true
+    e1_models_test.go:317:   M3 rollback: save → mutate → restore → exact: true
+    e1_models_test.go:324:   M2 invalid mutations: attempted=3 stuck=0 rejected=3
+=== RUN   TestE1v2_ThreeModelComparison/C_—_RegisterSet_($R0$–$R7$)
+    e1_models_test.go:306: model: C — RegisterSet ($R0$–$R7$)
+    e1_models_test.go:307:   raw surface: false | automatic timestamp: true
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         OK
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1 concurrent 8×2000 RMW (next_act/stderr): true
+    e1_models_test.go:260:   I0   cell types are uint64                          OK
+    e1_models_test.go:260:   I1   $R2$ NextAct is monotonic                      OK
+    e1_models_test.go:260:   I2   $R7$ Timestamp advances on every write         OK
+    e1_models_test.go:260:   I3   $R6$ Health is a valid status                  OK
+    e1_models_test.go:260:   I4   $R1$ Watchdog is disarmed or in the future     OK
+    e1_models_test.go:263:   → M1b governance ride (health/watchdog): true
+    e1_models_test.go:317:   M3 rollback: save → mutate → restore → exact: true
+    e1_models_test.go:324:   M2 invalid mutations: attempted=3 stuck=0 rejected=3
+=== NAME  TestE1v2_ThreeModelComparison
+    e1_models_test.go:352: 
+    e1_models_test.go:353: VERDICT (refutation-first):
+    e1_models_test.go:354:  1. Concurrency safety (M1) is a property of LOCKING: with equal mutexes, every
+    e1_models_test.go:355:     model preserves monotonic counters. The register file adds nothing here.
+    e1_models_test.go:356:  2. Invariant enforcement (M2) is a property of the CLOSED, POLICY-GUARDED SURFACE:
+    e1_models_test.go:357:     A (map) and B (plain struct) admit invalid states (wrong types, out-of-domain
+    e1_models_test.go:358:     values, regressions); B′ (guarded struct) and C (registers) repel them all.
+    e1_models_test.go:359:  3. B′ matches C on every measured property (M1, M1b, M2, M3, auditability). The
+    e1_models_test.go:360:     register abstraction is NOT proven necessary by E1v2 — the load-bearing
+    e1_models_test.go:361:     property is the guarded surface. Necessity is tested component-by-component in
+    e1_models_test.go:362:     E0; the remaining case for $R0$–$R7$ rests on notation, audit-by-construction
+    e1_models_test.go:363:     and the hardware metaphor, not on these metrics.
+--- PASS: TestE1v2_ThreeModelComparison (0.01s)
+    --- PASS: TestE1v2_ThreeModelComparison/A_—_GenericContext_(map[string]any) (0.00s)
+    --- PASS: TestE1v2_ThreeModelComparison/B_—_TypedState_(plain_struct,_exported_fields) (0.00s)
+    --- PASS: TestE1v2_ThreeModelComparison/B′_—_GuardedState_(closed_struct,_unexported_fields) (0.00s)
+    --- PASS: TestE1v2_ThreeModelComparison/C_—_RegisterSet_($R0$–$R7$) (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e1_models	0.448s

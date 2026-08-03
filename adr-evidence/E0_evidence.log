@@ -1,0 +1,29 @@
+=== RUN   TestE0_RegisterRemoval
+    e0_minimality_test.go:120: E0 — Section A: register removal against core invariants I0–I4
+    e0_minimality_test.go:121:   essential   = removal makes an invariant unverifiable or breaks it
+    e0_minimality_test.go:122:   candidate   = removal loses no invariant (requirements gap or removable)
+    e0_minimality_test.go:134:   remove $R0$ Session     → NO invariant lost (removal candidate)
+    e0_minimality_test.go:136:   remove $R1$ Watchdog    → [I4 unverifiable (input removed)]
+    e0_minimality_test.go:136:   remove $R2$ NextAct     → [I1 unverifiable (input removed)]
+    e0_minimality_test.go:134:   remove $R3$ Isolation   → NO invariant lost (removal candidate)
+    e0_minimality_test.go:134:   remove $R4$ Stderr      → NO invariant lost (removal candidate)
+    e0_minimality_test.go:134:   remove $R5$ SKK Badge   → NO invariant lost (removal candidate)
+    e0_minimality_test.go:136:   remove $R6$ Health      → [I3 unverifiable (input removed)]
+    e0_minimality_test.go:136:   remove $R7$ Timestamp   → [I2 unverifiable (input removed)]
+    e0_minimality_test.go:145:   finding: the current invariant suite pins only $R1$/R2/R6/R7;
+    e0_minimality_test.go:146:   $R0$ Session, $R3$ Isolation, $R4$ Stderr, $R5$ SKK Badge are unconstrained
+    e0_minimality_test.go:147:   → either their requirements are missing (add invariants) or they are removable (ADR).
+--- PASS: TestE0_RegisterRemoval (0.00s)
+=== RUN   TestE0_LifecycleRemoval
+    e0_minimality_test.go:240: 
+    e0_minimality_test.go:241: E0 — Section B: control-flow components vs lifecycle invariants L1–L4
+    e0_minimality_test.go:271:   remove —none—       → no invariant lost (control)
+    e0_minimality_test.go:283:   remove SESSION      → [L2 lost L3 lost]
+    e0_minimality_test.go:283:   remove WATCHDOG     → [L4 lost]
+    e0_minimality_test.go:283:   remove WAIT_OUTCOME → [L2 unverifiable (input removed) L4 lost]
+    e0_minimality_test.go:283:   remove RELEASE      → [L1 unverifiable (input removed) L4 broken]
+    e0_minimality_test.go:286:   finding: SESSION, WATCHDOG, WAIT_OUTCOME and RELEASE are all load-bearing
+    e0_minimality_test.go:287:   under the lifecycle invariants L1–L4.
+--- PASS: TestE0_LifecycleRemoval (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e0_minimality	0.515s

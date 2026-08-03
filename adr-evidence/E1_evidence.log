@@ -1,0 +1,18 @@
+=== RUN   TestScenario1_DirectPointerMutationOnControlStruct
+    e1_test.go:81: Scenario 1 — direct pointer mutation on monolithic SessionState
+    e1_test.go:82:   workload      : 8 workers × 2000 rounds of unsynchronized read-modify-write
+    e1_test.go:83:   expected final: 17000 (correct, no lost updates)
+    e1_test.go:84:   observed final: 3000
+    e1_test.go:85:   lost updates  : 14000 of 16000
+    e1_test.go:86:   verdict       : control struct silently lost updates — governance state corrupted
+--- PASS: TestScenario1_DirectPointerMutationOnControlStruct (0.03s)
+=== RUN   TestScenario2_RegisterMutationRepulsion
+    e1_test.go:124: Scenario 2 — $R0$–$R7$ mutation repulsion via kernel.RegisterSet
+    e1_test.go:125:   workload      : 8 workers × 2000 rounds of locked read-modify-write on R2/R4
+    e1_test.go:126:   $R2$ NextAct  : got 17000, expected 17000 (lost: 0)
+    e1_test.go:127:   $R4$ Stderr   : got 16000, expected 16000 (lost: 0)
+    e1_test.go:128:   snapshot      : [42 1785777291424796800 17000 4 16000 24301 1 1785777281427400098]
+    e1_test.go:129:   verdict       : all concurrent mutation repelled — final state exact
+--- PASS: TestScenario2_RegisterMutationRepulsion (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e1_registers	0.442s

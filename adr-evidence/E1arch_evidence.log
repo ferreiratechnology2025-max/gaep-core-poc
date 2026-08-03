@@ -1,0 +1,30 @@
+=== RUN   TestScenarioVerdicts
+--- PASS: TestScenarioVerdicts (0.00s)
+=== RUN   TestP7RequiresRepeatedRuns
+--- PASS: TestP7RequiresRepeatedRuns (0.00s)
+=== RUN   TestAdversarialVariantFails
+--- PASS: TestAdversarialVariantFails (0.00s)
+PASS
+ok  	gaep-core-poc/harness	0.348s
+=== RUN   TestE1_ArchitectureMatrix
+    e1_test.go:60: E1 — property × architecture matrix (v0 scaffold)
+    e1_test.go:61: Rule: architectures only emit events; the Property Oracle decides PASS/FAIL/UNKNOWN.
+    e1_test.go:62: Independence rule: B–E must be born from their own principles, not a rename of A.
+    e1_test.go:63: 
+    e1_test.go:70:   property                 | A    | B    | C    | D    | E   
+    e1_test.go:71:   ————————————————————————————————————————
+    e1_test.go:89:   P1                       | PASS | —    | —    | —    | —   
+    e1_test.go:89:   P2                       | UNKNOWN | —    | —    | —    | —   
+    e1_test.go:89:   P3                       | PASS | —    | —    | —    | —   
+    e1_test.go:89:   P4                       | PASS | —    | —    | —    | —   
+    e1_test.go:89:   P5                       | UNKNOWN | —    | —    | —    | —   
+    e1_test.go:89:   P6                       | UNKNOWN | —    | —    | —    | —   
+    e1_test.go:89:   P7                       | UNKNOWN | —    | —    | —    | —   
+    e1_test.go:89:   P8                       | UNKNOWN | —    | —    | —    | —   
+    e1_test.go:91: 
+    e1_test.go:92:   — : not implemented. P6 is structural (dual-run + source inspection),
+    e1_test.go:93:      not event-based. S1 exercised; remaining scenarios S2–S5 pending.
+    e1_test.go:94:   Verdict so far: A passes P1/P3/P4 on S1 (via the Oracle, not self-graded).
+--- PASS: TestE1_ArchitectureMatrix (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e1_architectures	0.345s
