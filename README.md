@@ -65,6 +65,11 @@ registrando a matriz propriedade × arquitetura como evidência.
 - `adr-evidence/experiment-plan.md` — ordem dos experimentos (E0–E5), com
   as **regras congeladas**: arquiteturas concorrentes conceitualmente
   independentes; avaliação exclusivamente via Property Oracle.
+- `adr-evidence/open-research-questions.md` — **gate de qualquer fase
+  futura**: nenhuma fase experimental nova é autorizada sem uma pergunta
+  de pesquisa declarada explicitamente aqui antes do plano de
+  implementação. Estado atual: nenhuma pergunta ativa (ver "Estado atual
+  da evidência" abaixo).
 
 ## Regra metodológica
 
@@ -84,11 +89,11 @@ Decisão por evidência:
 
 | Caminho | Papel |
 |---|---|
-| `harness/` | Property Oracle + eventos observáveis + bateria de cenários S1–S5 |
-| `kernel/` | Núcleo da arquitetura candidata A (registradores $R0$–$R7$, policy injetada) |
+| `harness/` | Property Oracle + eventos observáveis + bateria congelada de cenários S1–S5 |
+| `kernel/` | Núcleo da arquitetura candidata A (registradores $R0$–$R7$, policy injetada) — não comparada no E1/E2 (ver abaixo) |
 | `models_comp/` | Candidatos de representação de estado (A/B/B′) + invariantes + lifecycle |
-| `experiments/` | E0 (remoção de componentes), E1 (matriz de arquiteturas, scaffold), E3 (registradores A/B/B′/C) |
-| `adr-evidence/` | Propriedades + oracle, matriz de falsificação, plano e logs de evidência |
+| `experiments/` | E0 (remoção de componentes), E1v2 (registradores A/B/B′/C), E1/E2 (`e1_architectures/`: arquiteturas B/C/D/E rivais, bateria S1–S10, ver abaixo) |
+| `adr-evidence/` | Propriedades + oracle, matriz de falsificação, plano, relatórios de encerramento (E1/E2) e logs de evidência |
 
 ## Estado atual da evidência (resumo honesto)
 
@@ -101,10 +106,35 @@ Decisão por evidência:
   **R0/R3/R4/R5 com lacuna de requisito** (ou a propriedade é especificada,
   ou eles saem). SESSION/WATCHDOG/WAIT_OUTCOME/RELEASE são load-bearing no
   ciclo de vida.
-- Próximo passo: implementar as **arquiteturas concorrentes** (A GAEP, B Context
-  Object + Policy Pipeline, C event sourcing, D actor, E state machine) com
-  **independência conceitual** (regra congelada) e rodá-las pela bateria
-  S1–S5 via Property Oracle (ver `experiment-plan.md`, E1).
+- **E1 — CLOSED** (`experiments/e1_architectures/`,
+  `adr-evidence/E1_discriminative_power_report.md`): as arquiteturas B
+  (Context Object + Policy Pipeline), C (Event Sourcing), D (Actor Model,
+  cláusula estocástica N=50) e E (Hierarchical State Machine) foram
+  implementadas de forma independente e rodadas contra a bateria S1–S5 via
+  Property Oracle. B/C/E convergem byte-a-byte; D diverge só em S4×P8. O
+  contrato abstrai o mecanismo para P1–P5/P7 nas quatro; a bateria
+  original discrimina em apenas 1/40 células. A (registradores + lifecycle)
+  **não foi comparada** — o Passo 0 da Fase 5B encontrou três decisões
+  arquiteturais (identidade de capacidade, política de admissão,
+  rollback vs. estado absorvente) não cobertas pela spec congelada de A;
+  especificá-las post-hoc criaria uma arquitetura nova (A′), não testaria
+  a existente.
+- **E2 — CLOSED** (`adr-evidence/E2_1a_scenario_design.md`,
+  `adr-evidence/E2_divergence_classification.md`): a bateria foi expandida
+  de forma aditiva (S6–S10, sem alterar S1–S5, o Oracle ou o vocabulário
+  de eventos) para fechar lacunas de cobertura identificadas por análise
+  do instrumento (E2A). B/C/D/E passam sem regressão. A expansão revelou
+  **duas famílias independentes de sensibilidade de mecanismo**: P8
+  (isolamento concorrente — B/C/E=FAIL vs. D=PASS em S4/S8, sensível ao
+  escalonador) e P3 (semântica de rollback sob falha — B/C/D=FAIL vs.
+  E=PASS em S10, estável em 750 execuções de D). Nenhuma divergência é
+  tratada como defeito: cada arquitetura respeita sua própria spec
+  congelada; o harness registra a matriz, não força convergência.
+- **Estado atual do programa**: nenhuma fase experimental nova está em
+  andamento. `adr-evidence/open-research-questions.md` é o gate — nenhuma
+  fase futura (A não comparada incluída) é autorizada sem uma pergunta de
+  pesquisa explícita registrada ali antes de qualquer plano de
+  implementação.
 
 ## Notas
 
@@ -139,4 +169,6 @@ re-execução dos experimentos e a coleta de evidências do mundo real
 encontrarem falhas ou invalidações concretas.
 
 **Status:** Fase de Especificação: **encerrada**. Fase de Validação Prática:
-**iniciada**.
+**E1 e E2 concluídos** (E1 no commit `c665b40`; E2 na tag `e2-closed`);
+aguardando pergunta de pesquisa registrada em `open-research-questions.md`
+para qualquer fase seguinte.
