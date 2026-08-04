@@ -79,13 +79,24 @@ Cada transformação possui **cinco colunas**: **origem · protocolo · evidênc
 
 ### Experiments & Evidence (todos `for P0 v1.0.0`)
 
-| Exp | Artefato | Log de evidência | P0 |
-|---|---|---|---|
-| E0 | `experiments/e0_minimality` | `E0_evidence.log` | for P0 v1.0.0 |
-| E1 | `experiments/e1_registers` | `E1_evidence.log` | for P0 v1.0.0 |
-| E1v2 | `experiments/e1_models` | `E1v2_evidence.log` | for P0 v1.0.0 |
-| E1arch | `experiments/e1_architectures` + `harness/` | `E1arch_evidence.log` | for P0 v1.0.0 |
-| **Baseline** | Re-execução completa — `go test -count=1 -v ./...` (E0 + E1 + E1v2 + E1arch/harness) | `BASELINE_rerun.log` | for P0 v1.0.0 |
+> **Polaridade da evidência (tipagem epistemológica do veredito):**
+> `[SUPPORTS]` — hipótese **confirmada** pela execução;
+> `[REFUTES]` — hipótese **invalidada** pela execução;
+> `[INCONCLUSIVE]` — cenário **sem convergência empírica**.
+
+| Exp | Artefato | Log de evidência | Polaridade / Veredito | P0 |
+|---|---|---|---|---|
+| E0 | `experiments/e0_minimality` | `E0_evidence.log` | `[REFUTES]` — invalida a hipótese de que o Register File de 8 posições (R0–R7) é **minimalmente necessário**; apenas R1, R2, R6, R7 possuem requisitos mapeados em P0 v1.0.0 | for P0 v1.0.0 |
+| E1 | `experiments/e1_registers` | `E1_evidence.log` | `[SUPPORTS]` — confirma a hipótese de que superfícies de mutação fechadas/guardadas previnem **contaminação de estado** | for P0 v1.0.0 |
+| E1v2 | `experiments/e1_models` | `E1v2_evidence.log` | `[REFUTES]` — invalida a hipótese de que o RegisterSet é **estritamente necessário** para garantir os invariantes de segurança comparado a um GuardedState (Closure) | for P0 v1.0.0 |
+| E1arch | `experiments/e1_architectures` + `harness/` | `E1arch_evidence.log` | `[SUPPORTS]` — confirma que os contratos observáveis são preserváveis por **múltiplos mecanismos** (A–E): a autoridade reside no teste cego do comportamento (Arquitetura → Eventos → Oracle), não na arquitetura interna | for P0 v1.0.0 |
+| **Baseline** | Re-execução completa — `go test -count=1 -v ./...` (E0 + E1 + E1v2 + E1arch/harness) | `BASELINE_rerun.log` | `[SUPPORTS]` — re-execução **confirma o corpo de evidência existente** (estabilidade 0 falhas em 10 execuções); nenhuma invalidação nova | for P0 v1.0.0 |
+
+> **Achado arquitetural (registro de refutação):** R0, R3, R4 e R5
+> permanecerão na especificação apenas como reservas
+> notacionais/arquiteturais até que cenários futuros (S2–S5) apresentem
+> evidência empírica que exija sua reativação. O mesmo se aplica ao
+> RegisterSet como abstração em relação a um GuardedState.
 
 > **Baseline — verificação dos cinco invariantes:** (1) *unicidade ativa* —
 > uma única linha para a re-execução; (2) *imutabilidade referenciada* — o

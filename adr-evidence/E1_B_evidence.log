@@ -1,0 +1,28 @@
+=== RUN   TestB_PipelineFixedOrder
+--- PASS: TestB_PipelineFixedOrder (0.00s)
+=== RUN   TestB_AdmissionRejectionMapping
+--- PASS: TestB_AdmissionRejectionMapping (0.00s)
+=== RUN   TestB_EffectDenial
+--- PASS: TestB_EffectDenial (0.00s)
+=== RUN   TestB_RollbackEmitsOnce
+--- PASS: TestB_RollbackEmitsOnce (0.00s)
+=== RUN   TestE1_ArchitectureB_Battery
+    b_test.go:26: E1 — architecture B (Context Object + Policy Pipeline) × battery S1–S5 (Property Oracle)
+    b_test.go:27: Deterministic by construction: same commands ⇒ same context trajectory ⇒ same events.
+    b_test.go:76: 
+    b_test.go:77:   property                 | S1   | S2   | S3   | S4   | S5  
+    b_test.go:78:   ----------------------------------------------------
+    b_test.go:84:   P1                       | PASS | PASS | PASS | PASS | PASS
+    b_test.go:84:   P2                       | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN
+    b_test.go:84:   P3                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    b_test.go:84:   P4                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    b_test.go:84:   P5                       | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    b_test.go:84:   P6                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    b_test.go:84:   P7                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS
+    b_test.go:84:   P8                       | UNKNOWN | UNKNOWN | UNKNOWN | FAIL | UNKNOWN
+    b_test.go:86: 
+    b_test.go:87:   UNKNOWN = the scenario did not exercise the property's trigger in B's trace.
+    b_test.go:88:   P6 is structural (dual-run + source inspection), not event-based.
+--- PASS: TestE1_ArchitectureB_Battery (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e1_architectures	0.342s

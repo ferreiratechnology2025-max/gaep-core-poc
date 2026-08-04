@@ -2,8 +2,14 @@
 // architectures run through the same scenario battery, graded only by the
 // Property Oracle. This iteration ships the harness core (events + oracle +
 // battery) and the matrix scaffold: architecture A is represented by its
-// nominal event emission for S1; B–E are declared per the independence rule
-// (experiment-plan.md) and are not yet implemented.
+// nominal event emission for S1 (a real adapter driving kernel/ through
+// S1–S5 is pending — Fase 5B); B (Context Object + Policy Pipeline), C
+// (Event Sourcing), D (Actor Model) and E (Hierarchical State Machine)
+// are implemented (b_contextpipeline_test.go, c_eventsourcing_test.go,
+// d_actormodel_test.go, e_statemachine_test.go) and run the full S1–S5
+// battery. B/C/E are deterministic; D runs under the pre-registered
+// stochastic clause (N=50, modal verdict, high variance < 50%) — see
+// d_test.go and adr-evidence/E1_D_findings.md.
 //
 // Evidence output is captured to adr-evidence/E1arch_evidence.log.
 package e1_architectures_test
@@ -46,10 +52,10 @@ func archA() archColumn {
 func declaredArchs() []archColumn {
 	return []archColumn{
 		archA(),
-		{id: "B", name: "Context Object + Policy Pipeline"},
-		{id: "C", name: "Event Sourcing"},
-		{id: "D", name: "Actor Model"},
-		{id: "E", name: "Hierarchical State Machine"},
+		archB(),
+		archC(),
+		archD(),
+		archE(),
 	}
 }
 
