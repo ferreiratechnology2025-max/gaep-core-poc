@@ -1,0 +1,68 @@
+=== RUN   TestE2_2b_CoverageBattery
+=== RUN   TestE2_2b_CoverageBattery/B
+    e2_2b_test.go:57: E2.2b — architecture B (Context Object + Policy Pipeline) x {S9, S10} (Property Oracle)
+    e2_2b_test.go:58:   property                 | S9   | S10 
+    e2_2b_test.go:64:   P1                       | PASS | PASS
+    e2_2b_test.go:64:   P2                       | PASS | PASS
+    e2_2b_test.go:64:   P3                       | UNKNOWN | FAIL
+    e2_2b_test.go:64:   P4                       | UNKNOWN | PASS
+    e2_2b_test.go:64:   P5                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P6                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P7                       | PASS | PASS
+    e2_2b_test.go:64:   P8                       | PASS | UNKNOWN
+    e2_2b_test.go:74:   S10 P3 = FAIL -> NON-CONFORMANT with DECISÃO A (rollback does not restore authorization)
+=== RUN   TestE2_2b_CoverageBattery/C
+    e2_2b_test.go:57: E2.2b — architecture C (Event Sourcing) x {S9, S10} (Property Oracle)
+    e2_2b_test.go:58:   property                 | S9   | S10 
+    e2_2b_test.go:64:   P1                       | PASS | PASS
+    e2_2b_test.go:64:   P2                       | PASS | PASS
+    e2_2b_test.go:64:   P3                       | UNKNOWN | FAIL
+    e2_2b_test.go:64:   P4                       | UNKNOWN | PASS
+    e2_2b_test.go:64:   P5                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P6                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P7                       | PASS | PASS
+    e2_2b_test.go:64:   P8                       | PASS | UNKNOWN
+    e2_2b_test.go:74:   S10 P3 = FAIL -> NON-CONFORMANT with DECISÃO A (rollback does not restore authorization)
+=== RUN   TestE2_2b_CoverageBattery/E
+    e2_2b_test.go:57: E2.2b — architecture E (Hierarchical State Machine) x {S9, S10} (Property Oracle)
+    e2_2b_test.go:58:   property                 | S9   | S10 
+    e2_2b_test.go:64:   P1                       | PASS | PASS
+    e2_2b_test.go:64:   P2                       | PASS | PASS
+    e2_2b_test.go:64:   P3                       | UNKNOWN | PASS
+    e2_2b_test.go:64:   P4                       | UNKNOWN | PASS
+    e2_2b_test.go:64:   P5                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P6                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:64:   P7                       | PASS | PASS
+    e2_2b_test.go:64:   P8                       | PASS | UNKNOWN
+    e2_2b_test.go:74:   S10 P3 = PASS -> CONFORMANT with DECISÃO A (rollback does not restore authorization)
+--- PASS: TestE2_2b_CoverageBattery (0.00s)
+    --- PASS: TestE2_2b_CoverageBattery/B (0.00s)
+    --- PASS: TestE2_2b_CoverageBattery/C (0.00s)
+    --- PASS: TestE2_2b_CoverageBattery/E (0.00s)
+=== RUN   TestE2_2b_CoverageBattery_D
+    e2_2b_test.go:138: E2.2b — architecture D (Actor Model) x {S9, S10}, N=50 (stochastic clause)
+    e2_2b_test.go:139:   property                 | S9   | S10 
+    e2_2b_test.go:145:   P1                       | PASS | PASS
+    e2_2b_test.go:145:   P2                       | PASS | PASS
+    e2_2b_test.go:145:   P3                       | UNKNOWN | FAIL
+    e2_2b_test.go:145:   P4                       | UNKNOWN | PASS
+    e2_2b_test.go:145:   P5                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:145:   P6                       | UNKNOWN | UNKNOWN
+    e2_2b_test.go:145:   P7                       | PASS | PASS
+    e2_2b_test.go:145:   P8                       | PASS | UNKNOWN
+    e2_2b_test.go:147:   High-variance cells (modal freq < 50%): []
+    e2_2b_test.go:162:   NOTE (not asserted as bug): S9 x P8 is NOT point-mass (2 distinct verdicts over N=50): PASS=48 FAIL=2 UNKNOWN=0
+    e2_2b_test.go:170:   S10 P3 (modal) = FAIL -> NON-CONFORMANT with DECISÃO A
+--- PASS: TestE2_2b_CoverageBattery_D (0.00s)
+=== RUN   TestE2_2b_S9Adversarial
+    e2_2b_test.go:202: S9-adv (synthetic, not run against B/C/D/E): P2 = FAIL
+--- PASS: TestE2_2b_S9Adversarial (0.00s)
+PASS
+ok  	gaep-core-poc/experiments/e1_architectures	(cached)
+ok  	gaep-core-poc/experiments/e0_minimality	(cached)
+ok  	gaep-core-poc/experiments/e1_architectures	(cached)
+ok  	gaep-core-poc/experiments/e1_models	(cached)
+ok  	gaep-core-poc/experiments/e1_registers	(cached)
+ok  	gaep-core-poc/harness	(cached)
+?   	gaep-core-poc/kernel	[no test files]
+?   	gaep-core-poc/models_comp	[no test files]

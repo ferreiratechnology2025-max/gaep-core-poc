@@ -281,6 +281,47 @@ var cCommands = map[string][]cCommand{
 	"S5": {
 		{cCmdAdmit, "c1"},
 	},
+	// S6 — E2.1b coverage: capability fails, an effect is illegally
+	// attempted after the failure (pre-rollback), rollback recovers c1, and
+	// a second, unrelated capability is freshly admitted and completes
+	// normally (adr-evidence/E2_1a_scenario_design.md).
+	"S6": {
+		{cCmdAdmit, "c1"}, {cCmdAuthorize, "c1"}, {cCmdStart, "c1"}, {cCmdFail, "c1"},
+		{cCmdEffect, "c1"}, // illegal attempt, post-failure, pre-rollback
+		{cCmdRollback, "c1"},
+		{cCmdAdmit, "c2"}, {cCmdAuthorize, "c2"}, {cCmdStart, "c2"}, {cCmdSucceed, "c2"},
+	},
+	// S7 — E2.1b coverage: capability times out, an effect is illegally
+	// attempted after the timeout, and the late success is still ignored
+	// (adr-evidence/E2_1a_scenario_design.md).
+	"S7": {
+		{cCmdAdmit, "c1"}, {cCmdAuthorize, "c1"}, {cCmdStart, "c1"}, {cCmdTimeout, "c1"},
+		{cCmdEffect, "c1"},  // illegal attempt, post-timeout
+		{cCmdSucceed, "c1"}, // late, still ignored
+	},
+	// S8 — E2.1b coverage: two capabilities admitted, then interleaved
+	// (S4's structure, with explicit Admit on both — S4 itself is frozen
+	// and untouched) (adr-evidence/E2_1a_scenario_design.md).
+	"S8": {
+		{cCmdAdmit, "c1"}, {cCmdAdmit, "c2"},
+		{cCmdAuthorize, "c1"}, {cCmdStart, "c1"},
+		{cCmdStart, "c2"}, {cCmdSucceed, "c2"}, {cCmdSucceed, "c1"},
+	},
+	// S9 — E2.2b coverage: cross-capability effect scoping (E2.2a design, S9).
+	"S9": {
+		{cCmdAdmit, "c1"}, {cCmdAuthorize, "c1"}, {cCmdEffect, "c1"}, // legitimate
+		{cCmdAdmit, "c2"},
+		{cCmdEffect, "c2"},                        // illegal attempt: c2 not authorized, even though c1 is
+		{cCmdAuthorize, "c2"}, {cCmdEffect, "c2"}, // legitimate
+	},
+	// S10 — E2.2b coverage: effect attempted again after Fail+Rollback,
+	// without a fresh Authorize (E2.2a design, S10 — DECISÃO A: rollback
+	// does not restore authorization).
+	"S10": {
+		{cCmdAdmit, "c1"}, {cCmdAuthorize, "c1"}, {cCmdEffect, "c1"}, // legitimate
+		{cCmdFail, "c1"}, {cCmdRollback, "c1"},
+		{cCmdEffect, "c1"}, // attempted again, NO fresh Authorize
+	},
 }
 
 // archC adapts C to the scaffold's archColumn convention (S1 wired; the

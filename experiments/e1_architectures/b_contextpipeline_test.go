@@ -411,6 +411,53 @@ var bCommands = map[string][]bCommand{
 	"S5": {
 		{bCmdAdmit, "c1"},
 	},
+	// S6 — E2.1b coverage: capability fails, an effect is illegally
+	// attempted after the failure (pre-rollback), rollback recovers c1, and
+	// a second, unrelated capability is freshly admitted and completes
+	// normally (adr-evidence/E2_1a_scenario_design.md).
+	"S6": {
+		{bCmdAdmit, "c1"}, {bCmdAuthorize, "c1"}, {bCmdStart, "c1"}, {bCmdFail, "c1"},
+		{bCmdEffect, "c1"}, // illegal attempt, post-failure, pre-rollback
+		{bCmdRollback, "c1"},
+		{bCmdAdmit, "c2"}, {bCmdAuthorize, "c2"}, {bCmdStart, "c2"}, {bCmdSucceed, "c2"},
+	},
+	// S7 — E2.1b coverage: capability times out, an effect is illegally
+	// attempted after the timeout, and the late success is still ignored
+	// (adr-evidence/E2_1a_scenario_design.md).
+	"S7": {
+		{bCmdAdmit, "c1"}, {bCmdAuthorize, "c1"}, {bCmdStart, "c1"}, {bCmdTimeout, "c1"},
+		{bCmdEffect, "c1"},  // illegal attempt, post-timeout
+		{bCmdSucceed, "c1"}, // late, still ignored
+	},
+	// S8 — E2.1b coverage: two capabilities admitted, then interleaved
+	// (S4's structure, with explicit Admit on both — S4 itself is frozen
+	// and untouched) (adr-evidence/E2_1a_scenario_design.md).
+	"S8": {
+		{bCmdAdmit, "c1"}, {bCmdAdmit, "c2"},
+		{bCmdAuthorize, "c1"}, {bCmdStart, "c1"},
+		{bCmdStart, "c2"}, {bCmdSucceed, "c2"}, {bCmdSucceed, "c1"},
+	},
+	// S9 — E2.2b coverage: cross-capability effect scoping. c1 is
+	// legitimately authorized and effects; c2 attempts an illegal effect
+	// (not yet authorized) while c1 is already authorized, then c2 is
+	// authorized and effects legitimately
+	// (adr-evidence — E2.2a design, S9).
+	"S9": {
+		{bCmdAdmit, "c1"}, {bCmdAuthorize, "c1"}, {bCmdEffect, "c1"}, // legitimate
+		{bCmdAdmit, "c2"},
+		{bCmdEffect, "c2"},                        // illegal attempt: c2 not authorized, even though c1 is
+		{bCmdAuthorize, "c2"}, {bCmdEffect, "c2"}, // legitimate
+	},
+	// S10 — E2.2b coverage: effect attempted again after Fail+Rollback,
+	// without a fresh Authorize. Tests conformance to the contract
+	// semantics fixed by the Oracle's P3 criterion (blocked[cap] is
+	// cleared only by AuthorizationGranted, never by RollbackExecuted):
+	// rollback does not restore authorization (E2.2a design, S10).
+	"S10": {
+		{bCmdAdmit, "c1"}, {bCmdAuthorize, "c1"}, {bCmdEffect, "c1"}, // legitimate
+		{bCmdFail, "c1"}, {bCmdRollback, "c1"},
+		{bCmdEffect, "c1"}, // attempted again, NO fresh Authorize
+	},
 }
 
 // archB adapts B to the scaffold's archColumn convention (S1 wired; the

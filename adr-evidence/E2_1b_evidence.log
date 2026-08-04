@@ -1,0 +1,82 @@
+=== RUN   TestE2_1b_CoverageBattery
+=== RUN   TestE2_1b_CoverageBattery/B
+    e2_1b_coverage_test.go:138: E2.1b — architecture B (Context Object + Policy Pipeline) × battery S1–S8 (Property Oracle)
+    e2_1b_coverage_test.go:139:   property                 | S1   | S2   | S3   | S4   | S5   | S6   | S7   | S8  
+    e2_1b_coverage_test.go:140:   ------------------------------------------------------------------------------------
+    e2_1b_coverage_test.go:146:   P1                       | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS
+    e2_1b_coverage_test.go:146:   P2                       | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P3                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P4                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P5                       | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN
+    e2_1b_coverage_test.go:146:   P6                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P7                       | PASS | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | PASS
+    e2_1b_coverage_test.go:146:   P8                       | UNKNOWN | UNKNOWN | UNKNOWN | FAIL | UNKNOWN | PASS | UNKNOWN | FAIL
+    e2_1b_coverage_test.go:150: 
+    e2_1b_coverage_test.go:151:   Delta vs E1 (S1-S5):
+    e2_1b_coverage_test.go:161:     S1×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S2×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S3×P7: E1=UNKNOWN now=PASS (CHANGED)
+=== RUN   TestE2_1b_CoverageBattery/C
+    e2_1b_coverage_test.go:138: E2.1b — architecture C (Event Sourcing) × battery S1–S8 (Property Oracle)
+    e2_1b_coverage_test.go:139:   property                 | S1   | S2   | S3   | S4   | S5   | S6   | S7   | S8  
+    e2_1b_coverage_test.go:140:   ------------------------------------------------------------------------------------
+    e2_1b_coverage_test.go:146:   P1                       | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS
+    e2_1b_coverage_test.go:146:   P2                       | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P3                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P4                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P5                       | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN
+    e2_1b_coverage_test.go:146:   P6                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P7                       | PASS | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | PASS
+    e2_1b_coverage_test.go:146:   P8                       | UNKNOWN | UNKNOWN | UNKNOWN | FAIL | UNKNOWN | PASS | UNKNOWN | FAIL
+    e2_1b_coverage_test.go:150: 
+    e2_1b_coverage_test.go:151:   Delta vs E1 (S1-S5):
+    e2_1b_coverage_test.go:161:     S1×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S2×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S3×P7: E1=UNKNOWN now=PASS (CHANGED)
+=== RUN   TestE2_1b_CoverageBattery/E
+    e2_1b_coverage_test.go:138: E2.1b — architecture E (Hierarchical State Machine) × battery S1–S8 (Property Oracle)
+    e2_1b_coverage_test.go:139:   property                 | S1   | S2   | S3   | S4   | S5   | S6   | S7   | S8  
+    e2_1b_coverage_test.go:140:   ------------------------------------------------------------------------------------
+    e2_1b_coverage_test.go:146:   P1                       | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS
+    e2_1b_coverage_test.go:146:   P2                       | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P3                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P4                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P5                       | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN
+    e2_1b_coverage_test.go:146:   P6                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:146:   P7                       | PASS | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | PASS
+    e2_1b_coverage_test.go:146:   P8                       | UNKNOWN | UNKNOWN | UNKNOWN | FAIL | UNKNOWN | PASS | UNKNOWN | FAIL
+    e2_1b_coverage_test.go:150: 
+    e2_1b_coverage_test.go:151:   Delta vs E1 (S1-S5):
+    e2_1b_coverage_test.go:161:     S1×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S2×P7: E1=UNKNOWN now=PASS (CHANGED)
+    e2_1b_coverage_test.go:161:     S3×P7: E1=UNKNOWN now=PASS (CHANGED)
+--- PASS: TestE2_1b_CoverageBattery (0.00s)
+    --- PASS: TestE2_1b_CoverageBattery/B (0.00s)
+    --- PASS: TestE2_1b_CoverageBattery/C (0.00s)
+    --- PASS: TestE2_1b_CoverageBattery/E (0.00s)
+=== RUN   TestE2_1b_CoverageBattery_D
+    e2_1b_coverage_test.go:240: E2.1b — architecture D (Actor Model) × battery S1–S8, N=50 (stochastic clause)
+    e2_1b_coverage_test.go:241:   property                 | S1   | S2   | S3   | S4   | S5   | S6   | S7   | S8  
+    e2_1b_coverage_test.go:242:   ------------------------------------------------------------------------------------
+    e2_1b_coverage_test.go:248:   P1                       | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS
+    e2_1b_coverage_test.go:248:   P2                       | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:248:   P3                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:248:   P4                       | PASS | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:248:   P5                       | UNKNOWN | UNKNOWN | PASS | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN
+    e2_1b_coverage_test.go:248:   P6                       | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN
+    e2_1b_coverage_test.go:248:   P7                       | PASS | PASS | PASS | UNKNOWN | PASS | PASS | PASS | PASS
+    e2_1b_coverage_test.go:248:   P8                       | UNKNOWN | UNKNOWN | UNKNOWN | PASS | UNKNOWN | PASS | UNKNOWN | PASS
+    e2_1b_coverage_test.go:250: 
+    e2_1b_coverage_test.go:251:   High-variance cells (modal freq < 50%): []
+    e2_1b_coverage_test.go:252: 
+    e2_1b_coverage_test.go:253:   Distribution detail, S6-S8:
+--- PASS: TestE2_1b_CoverageBattery_D (0.01s)
+PASS
+ok  	gaep-core-poc/experiments/e1_architectures	(cached)
+ok  	gaep-core-poc/experiments/e0_minimality	(cached)
+ok  	gaep-core-poc/experiments/e1_architectures	(cached)
+ok  	gaep-core-poc/experiments/e1_models	(cached)
+ok  	gaep-core-poc/experiments/e1_registers	(cached)
+ok  	gaep-core-poc/harness	(cached)
+?   	gaep-core-poc/kernel	[no test files]
+?   	gaep-core-poc/models_comp	[no test files]

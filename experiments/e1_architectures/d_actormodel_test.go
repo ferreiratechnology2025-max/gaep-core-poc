@@ -304,6 +304,53 @@ var dCommands = map[string][]dCommand{
 	"S5": {
 		{dCmdAdmit, "c1"},
 	},
+	// S6 — E2.1b coverage: capability fails, an effect is illegally
+	// attempted after the failure (pre-rollback), rollback recovers c1, and
+	// a second, unrelated capability is freshly admitted and completes
+	// normally (adr-evidence/E2_1a_scenario_design.md). Two actors, one
+	// after the other (no interleaving intended: c2's commands only start
+	// after c1's mailbox is dispatched).
+	"S6": {
+		{dCmdAdmit, "c1"}, {dCmdAuthorize, "c1"}, {dCmdStart, "c1"}, {dCmdFail, "c1"},
+		{dCmdEffect, "c1"}, // illegal attempt, post-failure, pre-rollback
+		{dCmdRollback, "c1"},
+		{dCmdAdmit, "c2"}, {dCmdAuthorize, "c2"}, {dCmdStart, "c2"}, {dCmdSucceed, "c2"},
+	},
+	// S7 — E2.1b coverage: capability times out, an effect is illegally
+	// attempted after the timeout, and the late success is still ignored
+	// (adr-evidence/E2_1a_scenario_design.md). Single actor.
+	"S7": {
+		{dCmdAdmit, "c1"}, {dCmdAuthorize, "c1"}, {dCmdStart, "c1"}, {dCmdTimeout, "c1"},
+		{dCmdEffect, "c1"},  // illegal attempt, post-timeout
+		{dCmdSucceed, "c1"}, // late, still ignored
+	},
+	// S8 — E2.1b coverage: two capabilities admitted, then interleaved
+	// (S4's structure, with explicit Admit on both — S4 itself is frozen
+	// and untouched) (adr-evidence/E2_1a_scenario_design.md). Two actors;
+	// interleaving between them is governed by the runtime scheduler, same
+	// as S4.
+	"S8": {
+		{dCmdAdmit, "c1"}, {dCmdAdmit, "c2"},
+		{dCmdAuthorize, "c1"}, {dCmdStart, "c1"},
+		{dCmdStart, "c2"}, {dCmdSucceed, "c2"}, {dCmdSucceed, "c1"},
+	},
+	// S9 — E2.2b coverage: cross-capability effect scoping (E2.2a design,
+	// S9). Two actors, dispatched sequentially (c1's commands complete
+	// before c2's Admit is sent).
+	"S9": {
+		{dCmdAdmit, "c1"}, {dCmdAuthorize, "c1"}, {dCmdEffect, "c1"}, // legitimate
+		{dCmdAdmit, "c2"},
+		{dCmdEffect, "c2"},                        // illegal attempt: c2 not authorized, even though c1 is
+		{dCmdAuthorize, "c2"}, {dCmdEffect, "c2"}, // legitimate
+	},
+	// S10 — E2.2b coverage: effect attempted again after Fail+Rollback,
+	// without a fresh Authorize (E2.2a design, S10 — DECISÃO A: rollback
+	// does not restore authorization). Single actor.
+	"S10": {
+		{dCmdAdmit, "c1"}, {dCmdAuthorize, "c1"}, {dCmdEffect, "c1"}, // legitimate
+		{dCmdFail, "c1"}, {dCmdRollback, "c1"},
+		{dCmdEffect, "c1"}, // attempted again, NO fresh Authorize
+	},
 }
 
 // TestD_AdmissionRejectionMapping verifies the frozen rejection path
